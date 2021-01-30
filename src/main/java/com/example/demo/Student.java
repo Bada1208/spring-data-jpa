@@ -28,14 +28,14 @@ public class Student {
     private Long id;
 
     @Column(
-            name = "first_name",
+            name = "student_first_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private String firstName;
 
     @Column(
-            name = "last_name",
+            name = "student_last_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
@@ -57,8 +57,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String firstName, String lastName, String email, Integer age) {
-        this.id = id;
+    public Student(String firstName, String lastName, String email, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
