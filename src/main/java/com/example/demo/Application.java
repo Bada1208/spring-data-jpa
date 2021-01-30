@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 @SpringBootApplication
@@ -22,6 +23,12 @@ public class Application {
             studentRepository
                     .findAll(Sort.by(Sort.Direction.ASC, "firstName"))
                     .forEach(student -> System.out.println(student.getFirstName()));
+            PageRequest pageRequest = PageRequest.of(
+                    0,
+                    5,
+                    Sort.by("firstName").ascending());
+            System.out.println("PageRequest sorting:");
+            studentRepository.findAll(pageRequest).forEach(student -> System.out.println(student.getFirstName()));
         };
     }
 
