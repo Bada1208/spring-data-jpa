@@ -28,14 +28,14 @@ public class Student {
     private Long id;
 
     @Column(
-            name = "student_first_name",
+            name = "first_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private String firstName;
 
     @Column(
-            name = "student_last_name",
+            name = "last_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
