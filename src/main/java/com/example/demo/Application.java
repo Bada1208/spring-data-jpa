@@ -22,13 +22,11 @@ public class Application {
             Student maria = new Student("Maria", "Jones", "maria@gmail.com", 23);
             Student ali = new Student("Ali", "Jones", "ali@gmail.com", 18);
             studentRepository.saveAll(List.of(maria, ali));
-            studentRepository.findById(2L).ifPresentOrElse(System.out::println, () -> {
-                System.out.println("Student with ID 2 not found");
-            });
-            List<Student> all = studentRepository.findAll();
-            all.forEach(System.out::println);
-            studentRepository.deleteById(1L);
-            System.out.println(studentRepository.count());
+            System.out.println(studentRepository.findStudentByEmail("maria@gmail.com"));
+            studentRepository.findStudentByFirstName("Ali")
+                    .ifPresentOrElse(System.out::println, () -> {
+                        System.out.println("student with name ali not fount");
+                    });
         };
     }
 
