@@ -19,16 +19,7 @@ public class Application {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
         return args -> {
-            generateRandomStudents(studentRepository);
-            studentRepository
-                    .findAll(Sort.by(Sort.Direction.ASC, "firstName"))
-                    .forEach(student -> System.out.println(student.getFirstName()));
-            PageRequest pageRequest = PageRequest.of(
-                    0,
-                    5,
-                    Sort.by("firstName").ascending());
-            System.out.println("PageRequest sorting:");
-            studentRepository.findAll(pageRequest).forEach(student -> System.out.println(student.getFirstName()));
+
         };
     }
 
