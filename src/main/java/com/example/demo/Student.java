@@ -54,7 +54,10 @@ public class Student {
     )
     private Integer age;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(
+            mappedBy = "student",
+            orphanRemoval = true//remove studentIdCard with the student
+    )
     private StudentIdCard studentIdCard;
 
     public Student() {
