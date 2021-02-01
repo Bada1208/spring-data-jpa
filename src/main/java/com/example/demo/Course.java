@@ -41,17 +41,12 @@ public class Course {
     )
     private String department;
 
-    @ManyToMany(
-            mappedBy = "courses"
+    @OneToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            mappedBy = "course"
     )
-    private List<Student> students = new ArrayList<>();
+    private List<Enrolment> enrolments = new ArrayList<>();
 
-    /*  @OneToMany(
-              cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-              mappedBy = "course"
-      )
-      private List<Enrolment> enrolments = new ArrayList<>();
-  */
     public Course(String name, String department) {
         this.name = name;
         this.department = department;
@@ -84,7 +79,7 @@ public class Course {
         this.department = department;
     }
 
-   /* public List<Enrolment> getEnrolments() {
+    public List<Enrolment> getEnrolments() {
         return enrolments;
     }
 
@@ -96,10 +91,6 @@ public class Course {
 
     public void removeEnrolment(Enrolment enrolment) {
         enrolments.remove(enrolment);
-    }*/
-
-    public List<Student> getStudents() {
-        return students;
     }
 
     @Override

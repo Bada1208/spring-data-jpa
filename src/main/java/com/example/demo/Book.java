@@ -52,7 +52,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(LocalDateTime createdAt, String bookName) {
+    public Book(String bookName, LocalDateTime createdAt) {
         this.createdAt = createdAt;
         this.bookName = bookName;
     }

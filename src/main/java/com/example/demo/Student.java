@@ -63,6 +63,7 @@ public class Student {
             mappedBy = "student",
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+
     )
     private StudentIdCard studentIdCard;
 
@@ -70,25 +71,15 @@ public class Student {
             mappedBy = "student",
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
-    private final List<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    @OneToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            mappedBy = "student"
     )
-    @JoinTable(
-            name = "enrolment",
-            joinColumns = @JoinColumn(
-                    name = "student_id",
-                    foreignKey = @ForeignKey(name = "enrolment_student_id_fk")
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "course_id",
-                    foreignKey = @ForeignKey(name = "enrolment_course_id_fk")
-            )
-    )
-    private final List<Course> courses = new ArrayList<>();
+    private List<Enrolment> enrolments = new ArrayList<>();
 
     public Student(String firstName,
                    String lastName,
@@ -144,10 +135,6 @@ public class Student {
         this.age = age;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
     public void addBook(Book book) {
         if (!this.books.contains(book)) {
             this.books.add(book);
@@ -166,19 +153,22 @@ public class Student {
         this.studentIdCard = studentIdCard;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void enrollToCourse(Course course) {
-        courses.add(course);
-        course.getStudents().add(this);
+    public List<Enrolment> getEnrolments() {
+        return enrolments;
     }
 
+    public void addEnrolment(Enrolment enrolment) {
+        if (!enrolments.contains(enrolment)) {
+            enrolments.add(enrolment);
+        }
+    }
 
-    public void unEnrollToCourse(Course course) {
-        courses.remove(course);
-        course.getStudents().remove(this);
+    public void removeEnrolment(Enrolment enrolment) {
+        enrolments.remove(enrolment);
     }
 
     @Override
