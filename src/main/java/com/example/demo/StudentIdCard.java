@@ -37,12 +37,15 @@ public class StudentIdCard {
 
     @OneToOne(
             cascade = CascadeType.ALL,
-    //fetch = FetchType.EAGER by default we download student,fetch = FetchType.LAZY we load only studentCardId
-    fetch = FetchType.EAGER
+            //fetch = FetchType.EAGER by default we download student,fetch = FetchType.LAZY we load only studentCardId
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "student_id",
-            referencedColumnName = "id"
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "student_id_fk"
+            )
     )
     private Student student;
 
