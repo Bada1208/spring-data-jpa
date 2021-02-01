@@ -74,6 +74,22 @@ public class Student {
     )
     private final List<Book> books = new ArrayList<>();
 
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    @JoinTable(
+            name = "enrolment",
+            joinColumns = @JoinColumn(
+                    name = "student_id",
+                    foreignKey = @ForeignKey(name = "enrolment_student_id_fk")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "course_id",
+                    foreignKey = @ForeignKey(name = "enrolment_course_id_fk")
+            )
+    )
+    private final List<Course> courses = new ArrayList<>();
+
     public Student(String firstName,
                    String lastName,
                    String email,
@@ -148,6 +164,21 @@ public class Student {
 
     public void setStudentIdCard(StudentIdCard studentIdCard) {
         this.studentIdCard = studentIdCard;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void enrollToCourse(Course course) {
+        courses.add(course);
+        course.getStudents().add(this);
+    }
+
+
+    public void unEnrollToCourse(Course course) {
+        courses.remove(course);
+        course.getStudents().remove(this);
     }
 
     @Override
