@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @SpringBootApplication
 public class Application {
 
@@ -27,9 +30,21 @@ public class Application {
                     email,
                     faker.number().numberBetween(15, 80)
             );
+            student.addBook(new Book(LocalDateTime.now().minusDays(4), "Clean code"));
+            student.addBook(new Book(LocalDateTime.now(), "Shildt"));
+            student.addBook(new Book(LocalDateTime.now().minusYears(2), "Java 8+"));
             StudentIdCard studentIdCard = new StudentIdCard("123456789", student);
-            studentIdCardRepository.save(studentIdCard);
-            System.out.println(studentIdCardRepository.findById(1L));
+            student.setStudentIdCard(studentIdCard);
+
+            studentRepository.save(student);
+
+            studentRepository.findById(1L).ifPresent(s -> {
+                System.out.println("fetch book lazy...");
+                List<Book> books = student.getBooks();
+                books.forEach(book ->
+                        System.out.println(s.getFirstName() + " borrowed " + book.getBookName()));
+
+            });
 
         };
     }
