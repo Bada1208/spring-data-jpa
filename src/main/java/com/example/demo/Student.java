@@ -54,6 +54,9 @@ public class Student {
     )
     private Integer age;
 
+    @OneToOne(mappedBy = "student")
+    private StudentIdCard studentIdCard;
+
     public Student() {
     }
 
